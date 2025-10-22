@@ -1,500 +1,65 @@
-
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Agenda CRCM – Casa da Mulher Eliane de Grammont</title>
-  <meta name="theme-color" content="#fce7f3"/>
-  <link rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;Agenda CRCM&quot;,&quot;short_name&quot;:&quot;Agenda&quot;,&quot;start_url&quot;:&quot;.&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#fff&quot;,&quot;theme_color&quot;:&quot;#fce7f3&quot;}" />
-  <style>
-    :root { --pink:#fce7f3; --pink-100:#fde2f1; --lilac:#ede9fe; --border:#f5cde1; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:#0f172a; background: linear-gradient(135deg,#fff 0%,#fff 20%, var(--pink) 100%); }
-    .container { max-width: 1100px; margin-inline: auto; }
-    .card { background:#fff; border:1px solid #f1d1e4; border-radius: 18px; box-shadow: 0 6px 18px rgba(0,0,0,.04); }
-    .btn { border-radius: 12px; border:1px solid #e5e7eb; padding:10px 14px; background:#fff; cursor:pointer; }
-    .btn.primary { background:#ec4899; color:#fff; border-color:#ec4899; }
-    .btn:disabled { opacity:.6; cursor:not-allowed; }
-    .row{ display:flex; gap:16px; align-items:center; }
-    .col{ display:flex; flex-direction:column; gap:6px; }
-    input, select, textarea { border:1px solid #e5e7eb; border-radius:12px; padding:10px 12px; font:inherit; }
-    label { font-size:12px; opacity:.8 }
-    .toast-wrap{ position: fixed; right: 16px; bottom: 16px; display: grid; gap: 10px; z-index: 9999;}
-    .toast{ background: rgba(255,255,255,.95); border:1px solid var(--border); border-radius:16px; padding:10px 14px; width: 320px; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
-    .header { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid #f0d5e6; background:linear-gradient(180deg, #fff, #fff5fb); position: sticky; top:0; z-index:5; }
-    .brand { display:flex; gap:10px; align-items:center; }
-    .logo { width:36px; height:36px; border-radius:12px; background: linear-gradient(135deg,#f9a8d4,#c4b5fd); display:grid; place-items:center; }
-    .sidebar { width: 220px; padding: 16px; border-right:1px solid #f0d5e6; background: #fff7fb; min-height: calc(100dvh - 64px); }
-    .main { flex: 1; }
-    .navbtn{ width:100%; text-align:left; background:#fff; }
-    .navbtn.active{ background:#fde2f1; border-color:#f8c4de; font-weight:600;}
-    .grid { display:grid; grid-template-columns: 120px repeat(5, 1fr); }
-    .timecell{ padding:10px 8px; border-top:1px solid #eee; font-size: 12px; opacity:.7 }
-    .dayhead{ padding:10px 8px; font-weight:600; text-transform: capitalize; }
-    .slot{ padding:8px 10px; border-top:1px solid #eee; min-height: 64px; }
-    .appt{ display:block; text-align:left; width: fit-content; max-width: 160px; overflow:hidden; border-radius:12px; border:1px solid #f8c4de; background:#ffe4f3; padding:6px 10px; box-shadow: 0 6px 12px rgba(0,0,0,.04); font-size: 12px; }
-    .toolbar{ display:flex; justify-content: space-between; padding: 14px 18px;}
-    .tag{ font-size:10px; padding: 3px 6px; background:#fff; border:1px solid #f1d1e4; border-radius:999px; }
-    .hidden{ display:none }
-    @media (max-width: 980px){ .sidebar{ display:none } .toolbar{ flex-direction:column; gap:10px } .grid{ grid-template-columns: 80px repeat(5,1fr)} }
-  </style>
-  <!-- React + ReactDOM + Babel -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Supabase JS v2 -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Agenda CRCM Simplificada</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+body{font-family:sans-serif;margin:0;padding:0;background:#fff5f9;color:#333}
+main{max-width:600px;margin:40px auto;padding:20px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+input,button{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ddd;font-size:1em}
+button{background:#ec4899;color:white;cursor:pointer}
+.card{border:1px solid #f3d1e6;background:#fff9fb;border-radius:8px;padding:10px;margin-top:10px}
+h1{text-align:center;color:#ec4899}
+</style>
 </head>
 <body>
-  <div id="root"></div>
+<main>
+  <h1>Agenda CRCM</h1>
+  <div id="login">
+    <input id="email" placeholder="E-mail" />
+    <input id="senha" type="password" placeholder="Senha" />
+    <button onclick="login()">Entrar</button>
+  </div>
+  <div id="agenda" style="display:none">
+    <h2>Semana Atual</h2>
+    <div id="lista"></div>
+    <button onclick="sair()">Sair</button>
+  </div>
+</main>
+<script>
+const SUPABASE_URL = "https://cvkofcosarowxzhxenhn.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2a29mY29zYXJvd3h6aHhlbmhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwODkwNTUsImV4cCI6MjA3NjY2NTA1NX0.dnc9dtzdK5_u7Pyw_hJjuz9DFcassfLu7YBCI4rVuD0";
+const supa = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  <script type="text/babel">
-    const {useState,useEffect,useMemo,useRef,createContext,useContext} = React;
-
-    // --------- Utils ---------
-    const H_START=8, H_END=17;
-    const HOURS = Array.from({length: H_END-H_START+1},(_,i)=>H_START+i);
-    const fmtTime = n => String(n).padStart(2,'0')+':00';
-    const todayISO = (d=new Date()) => {
-      const tz = d.getTimezoneOffset();
-      const local = new Date(d.getTime()-tz*60*1000);
-      return local.toISOString().slice(0,10);
-    };
-    const weekDays = (base=new Date()) => {
-      const day = base.getDay();
-      const diffToMonday = (day===0?-6:1) - day;
-      const monday = new Date(base);
-      monday.setDate(base.getDate()+diffToMonday);
-      return Array.from({length:5},(_,i)=>{
-        const dd = new Date(monday); dd.setDate(monday.getDate()+i);
-        return { label: dd.toLocaleDateString('pt-BR',{weekday:'long'}), iso: todayISO(dd), date: dd };
-      });
-    };
-    const newId = () => Math.random().toString(36).slice(2,10);
-
-    // --------- Safe Env + Supabase Provider ---------
-    const LS_URL_KEY='SUPABASE_URL', LS_ANON_KEY='SUPABASE_ANON_KEY';
-    const SupaCtx = createContext({ supabase:null, ready:false, config:{url:null,key:null}, setConfig:()=>{} });
-    const useSupa = ()=> useContext(SupaCtx);
-
-    function readEnv() {
-      const vite = (typeof import !== 'undefined' && typeof import.meta!=='undefined' && import.meta && import.meta.env) ? import.meta.env : {};
-      const next = (typeof process!=='undefined' && process && process.env) ? process.env : {};
-      return {
-        url: vite?.VITE_SUPABASE_URL || next?.NEXT_PUBLIC_SUPABASE_URL || null,
-        key: vite?.VITE_SUPABASE_ANON_KEY || next?.NEXT_PUBLIC_SUPABASE_ANON_KEY || null,
-      };
-    }
-
-    function SupaProvider({children}){
-      const [config,setConfig]=useState(()=>{
-        const env=readEnv();
-        if(env.url && env.key) return env;
-        try{
-          return { url: localStorage.getItem(LS_URL_KEY), key: localStorage.getItem(LS_ANON_KEY) };
-        }catch{ return {url:null,key:null}; }
-      });
-      const [client,setClient]=useState(null);
-      useEffect(()=>{
-        if(config?.url && config?.key){
-          setClient( window.supabase.createClient(config.url, config.key) );
-        }else setClient(null);
-      },[config?.url,config?.key]);
-      const ready = !!client;
-      const value = { supabase: client, ready, config, setConfig };
-      return <SupaCtx.Provider value={value}>{children}</SupaCtx.Provider>;
-    }
-
-    // --------- UI Bits ---------
-    const Toast = ({toasts,onClose}) => (
-      <div className="toast-wrap">
-        {toasts.map(t=>(
-          <div key={t.id} className="toast">
-            <div style={{fontWeight:600,fontSize:13}}>{t.title}</div>
-            <div style={{opacity:.8,fontSize:12}}>{t.desc}</div>
-            <button className="btn" style={{marginTop:8,padding:'6px 10px',fontSize:12}} onClick={()=>onClose(t.id)}>Fechar</button>
-          </div>
-        ))}
-      </div>
-    );
-
-    const Logo = () => <div className="logo"><span style={{fontSize:18}}>❤</span></div>;
-
-    const Splash = ({text='Carregando...'}) => (
-      <div style={{minHeight:'70dvh',display:'grid',placeItems:'center'}}>
-        <div style={{opacity:.8,fontSize:14}}>{text}</div>
-      </div>
-    );
-
-    // --------- Setup Wizard ---------
-    function SetupWizard({onSave}){
-      const [url,setUrl]=useState('');
-      const [key,setKey]=useState('');
-      const valid=/^https:\\/\\/.+supabase\\.co/.test(url) && key.length>20;
-      return (
-        <div className="container" style={{padding:'40px 16px'}}>
-          <div className="card" style={{padding:20}}>
-            <div className="row" style={{marginBottom:12}}>
-              <Logo/>
-              <div>
-                <div style={{fontWeight:800}}>AGENDA CRCM</div>
-                <div style={{fontSize:12,opacity:.7}}>Casa da Mulher Eliane de Grammont</div>
-              </div>
-            </div>
-            <h3 style={{margin:'10px 0'}}>Conectar à Nuvem (Supabase)</h3>
-            <p style={{opacity:.8,fontSize:14}}>Cole a <b>SUPABASE_URL</b> e a <b>SUPABASE_ANON_KEY</b> (em Project Settings → API).</p>
-            <div className="row" style={{gap:20, alignItems:'stretch'}}>
-              <div className="col" style={{flex:1}}>
-                <label>SUPABASE_URL</label>
-                <input value={url} onChange={e=>setUrl(e.target.value)} placeholder="https://xxxxx.supabase.co"/>
-              </div>
-              <div className="col" style={{flex:1}}>
-                <label>SUPABASE_ANON_KEY</label>
-                <input value={key} onChange={e=>setKey(e.target.value)} placeholder="eyJhbGciOiJIUzI1..."/>
-              </div>
-            </div>
-            <div className="row" style={{marginTop:12, justifyContent:'space-between'}}>
-              <button className="btn" onClick={()=>{ localStorage.removeItem(LS_URL_KEY); localStorage.removeItem(LS_ANON_KEY); location.reload(); }}>Limpar configuração</button>
-              <button className={"btn primary"} disabled={!valid} onClick={()=>{ localStorage.setItem(LS_URL_KEY,url.trim()); localStorage.setItem(LS_ANON_KEY,key.trim()); onSave(url.trim(),key.trim()); }}>Salvar e continuar</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // --------- Main App ---------
-    function App(){
-      const {supabase, ready, config, setConfig} = useSupa();
-      const [session,setSession]=useState(null);
-      const [profile,setProfile]=useState(null);
-      const [appts,setAppts]=useState([]);
-      const [active,setActive]=useState('agenda');
-      const [weekBase,setWeekBase]=useState(new Date());
-      const [editing,setEditing]=useState(null);
-      const [toasts,setToasts]=useState([]);
-      const days=weekDays(weekBase);
-
-      const pushToast=(title,desc)=>{
-        const t={id:newId(),title,desc};
-        setToasts(prev=>[...prev,t]);
-        setTimeout(()=>setToasts(prev=>prev.filter(x=>x.id!==t.id)),5000);
-      };
-
-      if(!config?.url || !config?.key){
-        return <SetupWizard onSave={(u,k)=>{ setConfig({url:u,key:k}); }}/>
-      }
-      if(!ready) return <Splash text="Iniciando conexão segura com a nuvem..." />;
-
-      // Auth
-      useEffect(()=>{
-        supabase.auth.getSession().then(({data})=>setSession(data.session||null));
-        const { data: sub } = supabase.auth.onAuthStateChange((_e,s)=>setSession(s));
-        return ()=> sub.subscription.unsubscribe();
-      },[supabase]);
-
-      useEffect(()=>{ if(!session){ setProfile(null); setAppts([]); return; } fetchProfile(); },[session, supabase]);
-
-      async function fetchProfile(){
-        const uid=session.user.id;
-        const {data,error} = await supabase.from('profiles').select('*').eq('id',uid).maybeSingle();
-        if(error){ pushToast('Erro no perfil', error.message); return; }
-        setProfile(data);
-      }
-
-      useEffect(()=>{ if(!profile) return; fetchWeek(); },[profile, weekBase]);
-
-      async function fetchWeek(){
-        const from = days[0].iso, to = days[4].iso;
-        const {data,error} = await supabase.from('appointments').select('*').gte('date', from).lte('date', to);
-        if(error){ pushToast('Erro ao carregar', error.message); return; }
-        setAppts(data||[]);
-      }
-
-      useEffect(()=>{
-        if(!profile) return;
-        const ch = supabase.channel('realtime:appointments')
-          .on('postgres_changes',{event:'*',schema:'public',table:'appointments'},()=>{ fetchWeek(); })
-          .subscribe();
-        return ()=> supabase.removeChannel(ch);
-      },[profile, weekBase]);
-
-      async function signIn(email,password){
-        const {error} = await supabase.auth.signInWithPassword({email,password});
-        if(error) pushToast('Erro de login', error.message);
-        else pushToast('Bem-vinda', email);
-      }
-      async function signOut(){ await supabase.auth.signOut(); }
-
-      async function saveToCloud(form){
-        if(profile?.role!=='admin'){ pushToast('Sem permissão','Apenas administradora pode salvar.'); return; }
-        if(form.end<=form.start){ pushToast('Horário inválido','Fim deve ser maior que início.'); return; }
-        const payload = {...form, created_by: session.user.id};
-        const {error}=await supabase.from('appointments').upsert(payload,{onConflict:'id'});
-        if(error){ pushToast('Erro ao salvar', error.message); return; }
-        setEditing(null);
-      }
-      async function deleteFromCloud(form){
-        if(profile?.role!=='admin'){ pushToast('Sem permissão','Apenas administradora pode excluir.'); return; }
-        const {error}=await supabase.from('appointments').delete().eq('id',form.id);
-        if(error){ pushToast('Erro ao excluir', error.message); return; }
-        setEditing(null);
-      }
-
-      const userAppts = useMemo(()=>{
-        if(!profile) return [];
-        return profile.role==='admin' ? appts : appts.filter(a=>a.tech_id===profile.tech_id);
-      },[appts, profile]);
-
-      if(!session || !profile){
-        return (
-          <div>
-            <HeaderBar user={{name:'Acesso'}} />
-            <AuthCard onLogin={signIn} onClearConfig={()=>{ localStorage.removeItem(LS_URL_KEY); localStorage.removeItem(LS_ANON_KEY); location.reload(); }} />
-            <Toast toasts={toasts} onClose={(id)=>setToasts(t=>t.filter(x=>x.id!==id))}/>
-          </div>
-        );
-      }
-
-      return (
-        <div>
-          <HeaderBar user={{name: profile.name || profile.email}} />
-          <div className="row" style={{alignItems:'stretch'}}>
-            <Sidebar active={active} setActive={setActive} user={{role:profile.role, name: profile.name||profile.email}} onLogout={signOut}/>
-            <main className="main">
-              {active==='agenda' && <>
-                <ToolbarWeek weekBase={weekBase} setWeekBase={setWeekBase} user={{role:profile.role}}/>
-                <ScheduleGrid appts={userAppts} user={{role:profile.role}} weekBase={weekBase} onSelectAppt={profile.role==='admin'? setEditing: undefined}/>
-              </>}
-              {active==='cadastro' && profile.role==='admin' && <>
-                <div style={{padding:'16px 18px',fontWeight:600}}>Cadastrar/Editar Atendimentos (nuvem)</div>
-                <AdminForm initial={editing} onSave={saveToCloud} onDelete={deleteFromCloud}/>
-                <ListAppts appts={appts} onEdit={setEditing}/>
-              </>}
-              {active==='relatorios' && profile.role==='admin' && <Relatorios appts={appts}/>}
-              {active==='perfil' && <Perfil user={profile}/>}
-            </main>
-          </div>
-          <Toast toasts={toasts} onClose={(id)=>setToasts(t=>t.filter(x=>x.id!==id))}/>
-        </div>
-      );
-    }
-
-    // --------- More UI ---------
-    const HeaderBar = ({user}) => (
-      <div className="header">
-        <div className="brand">
-          <Logo/>
-          <div>
-            <div style={{fontWeight:800}}>AGENDA CRCM</div>
-            <div style={{fontSize:12,opacity:.7}}>Casa da Mulher Eliane de Grammont</div>
-          </div>
-        </div>
-        <div className="row" style={{gap:8}}>
-          <span className="tag">{user?.name}</span>
-        </div>
-      </div>
-    );
-
-    function Sidebar({active,setActive,user,onLogout}){
-      const items=[
-        {id:'agenda',label:'Agendamentos'},
-        ...(user.role==='admin' ? [{id:'cadastro',label:'Cadastrar/Editar'},{id:'relatorios',label:'Relatórios'}] : []),
-        {id:'perfil',label:'Perfil'},
-      ];
-      return (
-        <aside className="sidebar card">
-          {items.map(it=>(
-            <button key={it.id} className={"navbtn btn "+(active===it.id?'active':'')} onClick={()=>setActive(it.id)}>{it.label}</button>
-          ))}
-          <div style="height:8px"></div>
-          <button className="btn" onClick={onLogout}>Sair</button>
-        </aside>
-      );
-    }
-
-    function ToolbarWeek({weekBase,setWeekBase,user}){
-      const days=weekDays(weekBase);
-      return (
-        <div className="toolbar">
-          <div>
-            <div style={{fontWeight:600}}>Semana de {days[0].date.toLocaleDateString('pt-BR')} a {days[4].date.toLocaleDateString('pt-BR')}</div>
-            <div style={{fontSize:12,opacity:.7}}>{user.role==='admin' ? 'Você pode clicar em um bloco para editar.' : 'Visualização somente leitura.'}</div>
-          </div>
-          <div className="row">
-            <button className="btn" onClick={()=>{ const d=new Date(weekBase); d.setDate(weekBase.getDate()-7); setWeekBase(d); }}>◀ Semana anterior</button>
-            <button className="btn" onClick={()=>setWeekBase(new Date())}>Hoje</button>
-            <button className="btn" onClick={()=>{ const d=new Date(weekBase); d.setDate(weekBase.getDate()+7); setWeekBase(d); }}>Próxima semana ▶</button>
-          </div>
-        </div>
-      );
-    }
-
-    function ScheduleGrid({appts,user,weekBase,onSelectAppt}){
-      const days=weekDays(weekBase);
-      const byDay = useMemo(()=>{
-        const m={}; days.forEach(d=>m[d.iso]=[]);
-        appts.forEach(a=>{ if(m[a.date]) m[a.date].push(a); });
-        Object.keys(m).forEach(k=> m[k].sort((x,y)=>x.start-y.start));
-        return m;
-      },[appts, weekBase]);
-      return (
-        <div style={{padding:'0 18px 18px'}}>
-          <div className="grid">
-            <div></div>
-            {days.map(d=>(<div key={d.iso} className="dayhead">{d.label} <span style={{opacity:.6}}>{d.date.toLocaleDateString('pt-BR')}</span></div>))}
-            {HOURS.slice(0,-1).map(h=>(
-              <React.Fragment key={h}>
-                <div className="timecell">{fmtTime(h)}</div>
-                {days.map(d=>(
-                  <div key={d.iso+'-'+h} className="slot">
-                    <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
-                      {(byDay[d.iso]||[]).filter(a=>a.start===h).map(a=>(
-                        <button key={a.id} className="appt" onClick={()=>onSelectAppt && onSelectAppt(a)} title={`${a.client} – ${a.type}`}>
-                          <div style={{fontWeight:600,whiteSpace:'nowrap',textOverflow:'ellipsis',overflow:'hidden'}}>{a.client}</div>
-                          <div style={{opacity:.7}}>{a.type} • {fmtTime(a.start)}–{fmtTime(a.end)}</div>
-                          <div style={{opacity:.7}}>{a.tech_id}</div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    function AdminForm({initial,onSave,onDelete}){
-      const [form,setForm]=useState(()=> initial || ({
-        id:newId(), date: todayISO(), start:8, end:9, client:'', type:'', notes:'', tech_id:'t1'
-      }));
-      useEffect(()=>{ if(initial) setForm(initial); },[initial]);
-      const upd=(k,v)=> setForm(f=>({...f,[k]:v}));
-      return (
-        <div className="container" style={{padding:'0 18px 18px'}}>
-          <div className="card" style={{padding:16}}>
-            <div className="row" style={{gap:18, flexWrap:'wrap'}}>
-              <div className="col"><label>Data</label><input type="date" value={form.date} onChange={e=>upd('date',e.target.value)}/></div>
-              <div className="col"><label>Técnica</label>
-                <select value={form.tech_id} onChange={e=>upd('tech_id',e.target.value)}>
-                  {['t1','t2','t3','t4','t5','t6','t7','t8','t9','t10'].map(id=><option key={id} value={id}>{id}</option>)}
-                </select>
-              </div>
-              <div className="col"><label>Início</label>
-                <select value={form.start} onChange={e=>upd('start',Number(e.target.value))}>
-                  {HOURS.slice(0,-1).map(h=><option key={h} value={h}>{fmtTime(h)}</option>)}
-                </select>
-              </div>
-              <div className="col"><label>Fim</label>
-                <select value={form.end} onChange={e=>upd('end',Number(e.target.value))}>
-                  {HOURS.slice(1).map(h=><option key={h} value={h}>{fmtTime(h)}</option>)}
-                </select>
-              </div>
-              <div className="col" style={{flex:1,minWidth:240}}><label>Cliente</label><input value={form.client} onChange={e=>upd('client',e.target.value)} placeholder="Nome da cliente"/></div>
-              <div className="col" style={{flex:1,minWidth:240}}><label>Tipo de atendimento</label><input value={form.type} onChange={e=>upd('type',e.target.value)} placeholder="Jurídico, Psicológico, Social..."/></div>
-              <div className="col" style={{flexBasis:'100%'}}><label>Notas</label><textarea value={form.notes} onChange={e=>upd('notes',e.target.value)} rows="3" /></div>
-            </div>
-            <div className="row" style={{justifyContent:'flex-start', gap:10}}>
-              <button className="btn primary" onClick={()=>onSave(form)}>Salvar atendimento</button>
-              {initial && <button className="btn" onClick={()=>onDelete(form)}>Excluir</button>}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    function ListAppts({appts,onEdit}){
-      return (
-        <div className="container" style={{padding:'0 18px 18px'}}>
-          <div className="row" style={{padding:'8px 0', fontSize:14, fontWeight:600}}>Atendimentos desta semana</div>
-          <div className="row" style={{flexWrap:'wrap'}}>
-            {appts.map(a=>(
-              <button key={a.id} className="card" style={{padding:12, textAlign:'left', minWidth:240}} onClick={()=>onEdit(a)}>
-                <div style={{fontWeight:600}}>{a.client}</div>
-                <div style={{opacity:.7, fontSize:13}}>{a.type} – {fmtTime(a.start)}–{fmtTime(a.end)} – {a.date}</div>
-                <div style={{opacity:.7, fontSize:12}}>técnica: {a.tech_id}</div>
-              </button>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    function Perfil({user}){
-      return (
-        <div className="container" style={{padding:'18px'}}>
-          <div className="card" style={{padding:16}}>
-            <div style={{fontWeight:600, marginBottom:8}}>Perfil</div>
-            <div><b>Nome:</b> {user.name || user.email}</div>
-            <div><b>Função:</b> {user.role==='admin'?'Administradora':'Técnica'}</div>
-            <div><b>Área:</b> {user.area || '—'}</div>
-            <div><b>Técnica (ID):</b> {user.tech_id || '—'}</div>
-          </div>
-        </div>
-      );
-    }
-
-    function Relatorios({appts}){
-      const porTec = useMemo(()=>{
-        const m={}; appts.forEach(a=> m[a.tech_id]=(m[a.tech_id]||0)+1 ); return m;
-      },[appts]);
-      return (
-        <div className="container" style={{padding:'18px'}}>
-          <div className="card" style={{padding:16}}>
-            <div style={{fontWeight:600, marginBottom:8}}>Relatórios</div>
-            {Object.keys(porTec).length===0 ? <div style={{opacity:.7}}>Sem dados.</div> : (
-              <ul>{Object.entries(porTec).map(([id,n])=>(<li key={id}>{id}: <b>{n}</b></li>))}</ul>
-            )}
-          </div>
-        </div>
-      );
-    }
-
-    function AuthCard({onLogin,onClearConfig}){
-      const [email,setEmail]=useState('');
-      const [password,setPassword]=useState('');
-      const [show,setShow]=useState(false);
-      return (
-        <div className="container" style={{padding:'40px 16px'}}>
-          <div className="card" style={{padding:20}}>
-            <div className="row" style={{marginBottom:12}}>
-              <Logo/>
-              <div>
-                <div style={{fontWeight:800}}>AGENDA CRCM</div>
-                <div style={{fontSize:12,opacity:.7}}>Casa da Mulher Eliane de Grammont</div>
-              </div>
-            </div>
-            <div className="row" style={{gap:16, alignItems:'flex-end'}}>
-              <div className="col" style={{flex:1}}>
-                <label>E-mail</label>
-                <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="nome@exemplo.com"/>
-              </div>
-              <div className="col" style={{flex:1}}>
-                <label>Senha</label>
-                <input type={show?'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} placeholder="••••••"/>
-                <label style={{fontSize:12,opacity:.7,display:'flex',gap:8,alignItems:'center'}}>
-                  <input type="checkbox" checked={show} onChange={e=>setShow(e.target.checked)}/> mostrar senha
-                </label>
-              </div>
-              <button className="btn primary" onClick={()=>onLogin(email,password)}>Acessar</button>
-            </div>
-            <div className="row" style={{marginTop:12, justifyContent:'space-between'}}>
-              <span style={{fontSize:12,opacity:.7}}>Precisa reconfigurar as chaves?</span>
-              <button className="btn" onClick={onClearConfig}>Reconfigurar conexão</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // --------- Render ---------
-    const Root = ()=> (
-      <SupaProvider>
-        <App/>
-      </SupaProvider>
-    );
-    ReactDOM.createRoot(document.getElementById('root')).render(<Root/>);
-  </script>
+async function login(){
+  const email=document.getElementById('email').value;
+  const senha=document.getElementById('senha').value;
+  const {data,error}=await supa.auth.signInWithPassword({email,password:senha});
+  if(error){alert("Erro: "+error.message);return;}
+  document.getElementById('login').style.display='none';
+  document.getElementById('agenda').style.display='block';
+  carregarAgenda();
+}
+async function carregarAgenda(){
+  const hoje=new Date(); const semInicio=new Date(hoje.setDate(hoje.getDate()-hoje.getDay()+1));
+  const semFim=new Date(semInicio); semFim.setDate(semInicio.getDate()+4);
+  const {data,error}=await supa.from('appointments').select('*').gte('date',semInicio.toISOString().slice(0,10)).lte('date',semFim.toISOString().slice(0,10));
+  if(error){alert("Erro: "+error.message);return;}
+  const lista=document.getElementById('lista');
+  lista.innerHTML='';
+  data.forEach(a=>{
+    const div=document.createElement('div');
+    div.className='card';
+    div.innerHTML=`<b>${a.client}</b><br>${a.type} (${a.tech_id})<br>${a.date} ${a.start}:00–${a.end}:00`;
+    lista.appendChild(div);
+  });
+}
+async function sair(){
+  await supa.auth.signOut();
+  location.reload();
+}
+</script>
 </body>
 </html>
